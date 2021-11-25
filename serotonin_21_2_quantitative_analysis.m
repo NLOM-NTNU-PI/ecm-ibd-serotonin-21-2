@@ -46,3 +46,10 @@ adaptive_threshold = adaptthresh(shg);
 shg_adapt = imbinarize(shg,adaptive_threshold); %Only when features throughout image
 imshowpair(shg_adapt,shg,'montage')
 
+%Crop for ROI
+figure
+shg_rot = imrotate(shg,12,'bilinear','loose');
+height = 200;
+width = 200;
+shg_rot_crop = imcrop(shg_rot, [98 434-height width height]); %height set to 200
+image(shg_rot_crop,'CDataMapping','scaled')
