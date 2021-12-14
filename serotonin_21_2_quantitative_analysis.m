@@ -26,12 +26,15 @@ af = img{3,1};
 
 image(shg,'CDataMapping','scaled')
 
+folder = 'results\';
+
 %Otsus thresholding method
-figure
 level = graythresh(shg);
 shg_bw = imbinarize(shg,level);
 figure
 imshowpair(shg_bw,shg,'montage')
+
+export_fig([folder 'otsu.png'])
 
 %Multilevel Otsus
 figure
@@ -40,11 +43,15 @@ shg_seg = imquantize(shg,levels);
 shg_seg_rgb = label2rgb(shg_seg);
 imshowpair(shg_seg_rgb,shg,'montage')
 
+export_fig([folder 'multilevel_otsu.png'])
+
 %Adaptive threshold
 figure
 adaptive_threshold = adaptthresh(shg);
 shg_adapt = imbinarize(shg,adaptive_threshold); %Only when features throughout image
 imshowpair(shg_adapt,shg,'montage')
+
+export_fig([folder 'adaptive_thresh.png'])
 
 %Crop for ROI
 figure
@@ -53,3 +60,6 @@ height = 200;
 width = 200;
 shg_rot_crop = imcrop(shg_rot, [98 434-height width height]); %height set to 200
 image(shg_rot_crop,'CDataMapping','scaled')
+
+set(gca,'visible','off')
+export_fig([folder 'crop_rot.png'])
